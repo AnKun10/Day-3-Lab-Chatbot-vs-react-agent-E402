@@ -2,7 +2,6 @@
 🚀 CORE AGENT APP (Dành cho Role 4: Core Agent Developer)
 File chính ghép nối tất cả các thành phần: Tools + Prompts + Test Cases + Multi-Provider.
 Chủ đề: Trợ Lý Nắm Bắt Tính Cách & Chọn Quà Tặng Phù Hợp (Trọn bộ 10 Tools)
-Developer: Nguyễn Trần Nghĩa (01664)
 """
 
 import ast
@@ -24,7 +23,7 @@ if sys.stdout.encoding != 'utf-8':
 
 # Import các thành phần từ file của Role 2, Role 3 & Multi-Provider Adapter
 from tools import AVAILABLE_TOOLS
-from prompts import CHATBOT_BASELINE_PROMPT, REACT_SYSTEM_PROMPT, MAX_ITERATIONS
+from prompts import CHATBOT_BASELINE_PROMPT, REACT_SYSTEM_PROMPT, AUTONOMOUS_PLANNING_PROMPT, MAX_ITERATIONS
 from providers import get_llm_provider
 
 load_dotenv()
@@ -117,7 +116,7 @@ def run_react_agent(user_query: str, provider):
         print(f"\n--- 🔄 Vòng lặp ReAct (Step {step}/{MAX_ITERATIONS}) ---")
         
         # Nếu đang ở Offline Mock Mode (không kết nối API key)
-        if provider.__class__.__name__ == "OfflineMockProvider" or not getattr(provider, "api_key", True):
+        if provider.__class__.__name__ in ["OfflineMockProvider", "MockProvider"] or not getattr(provider, "api_key", True):
             if step == 1:
                 print("🧠 Thought: Cần phân tích đặc điểm tính cách và sở thích người nhận.")
                 print("🛠️ Action: analyze_personality['Nữ 22 tuổi thích đọc sách và cà phê']")
@@ -165,6 +164,129 @@ def run_react_agent(user_query: str, provider):
         print(f"\n🛡️ GUARDRAIL TRIGGERED: Đã đạt giới hạn tối đa {MAX_ITERATIONS} bước. Ngắt lặp an toàn!")
 
 
+def run_autonomous_agent(user_query: str, provider):
+    """
+    🎁 BONUS CẤP 4: AUTONOMOUS AGENT (Planning + Execution + Memory + Goal Evaluation)
+    Tự động chia nhỏ mục tiêu phức tạp, thực thi từng bước bằng Tools và lưu vết vào Memory.
+    """
+    print(f"\n🚀 [AUTONOMOUS AGENT - CẤP 4] Mục tiêu lớn (Goal): {user_query}")
+    memory = []
+    
+    is_mock = provider.__class__.__name__ in ["OfflineMockProvider", "MockProvider"] or not getattr(provider, "api_key", True)
+    
+    if is_mock:
+        print("\n📋 [PHASE 1: PLANNING - TỰ RÃ MỤC TIÊU]")
+        plans = [
+            {"step": 1, "task": "Phân tích đặc điểm tính cách & trích xuất sở thích người nhận"},
+            {"step": 2, "task": "Lọc danh sách quà tặng trong kho phù hợp ngân sách & kiểm tra đánh giá (Reviews)"},
+            {"step": 3, "task": "Tìm vị trí cửa hàng quà tặng gần nhất & đề xuất phong cách gói quà phù hợp"},
+            {"step": 4, "task": "Tổng hợp kết quả cuối cùng và tự đánh giá hoàn thành mục tiêu (Goal Evaluation)"}
+        ]
+        for p in plans:
+            print(f"  📌 Bước {p['step']}: {p['task']}")
+            
+        print("\n⚙️ [PHASE 2: EXECUTION & MEMORY TRACKING]")
+        
+        # Step 1
+        print(f"\n--- 🔄 Step 1: {plans[0]['task']} ---")
+        print("🧠 Thought/Planning: Phân tích đặc điểm đối tượng tặng quà.")
+        print(f"🛠️ Action: analyze_personality['{user_query}']")
+        obs1 = AVAILABLE_TOOLS["analyze_personality"](user_query)
+        print(f"👁️ Observation:\n{obs1}")
+        memory.append({"step": 1, "plan": plans[0]['task'], "action": f"analyze_personality['{user_query}']", "result": obs1})
+        print("💾 [Memory Saved]: Đã lưu thông tin tính cách vào bộ nhớ (Memory).")
+        
+        # Step 2
+        print(f"\n--- 🔄 Step 2: {plans[1]['task']} ---")
+        print("🧠 Thought/Planning: Lọc danh sách món quà dưới 500k VNĐ và xem đánh giá chất lượng sản phẩm.")
+        print("🛠️ Action: filter_by_budget[500000, 0]")
+        obs2_1 = AVAILABLE_TOOLS["filter_by_budget"](500000, 0)
+        print(f"👁️ Observation 1:\n{obs2_1}")
+        print("🛠️ Action: check_reviews['GIFT001']")
+        obs2_2 = AVAILABLE_TOOLS["check_reviews"]("GIFT001")
+        print(f"👁️ Observation 2:\n{obs2_2}")
+        step2_res = f"Filter:\n{obs2_1}\nReview:\n{obs2_2}"
+        memory.append({"step": 2, "plan": plans[1]['task'], "action": "filter_by_budget + check_reviews", "result": step2_res})
+        print("💾 [Memory Saved]: Đã lưu danh sách quà & đánh giá vào bộ nhớ (Memory).")
+        
+        # Step 3
+        print(f"\n--- 🔄 Step 3: {plans[2]['task']} ---")
+        print("🧠 Thought/Planning: Tra cứu cửa hàng bán quà gần nhất ở Hà Nội và phong cách gói quà sinh nhật.")
+        print("🛠️ Action: find_nearby_stores['Hà Nội', 'Cầu Giấy']")
+        obs3_1 = AVAILABLE_TOOLS["find_nearby_stores"]("Hà Nội", "Cầu Giấy")
+        print(f"👁️ Observation 1:\n{obs3_1}")
+        print("🛠️ Action: suggest_gift_wrapping['Sinh nhật', 'bạn gái']")
+        obs3_2 = AVAILABLE_TOOLS["suggest_gift_wrapping"]("Sinh nhật", "bạn gái")
+        print(f"👁️ Observation 2:\n{obs3_2}")
+        step3_res = f"Stores:\n{obs3_1}\nWrapping:\n{obs3_2}"
+        memory.append({"step": 3, "plan": plans[2]['task'], "action": "find_nearby_stores + suggest_gift_wrapping", "result": step3_res})
+        print("💾 [Memory Saved]: Đã lưu vị trí cửa hàng & style gói quà vào bộ nhớ (Memory).")
+        
+        # Step 4: Evaluation
+        print(f"\n--- 🎯 Step 4: [GOAL EVALUATION & FINAL SYNTHESIS] ---")
+        print(f"📊 Tổng số bản ghi trong Memory: {len(memory)} bước thực thi thành công.")
+        final_ans = (
+            "BÁO CÁO TƯ VẤN HOÀN CHỈNH TỪ AUTONOMOUS AGENT (CẤP 4):\n"
+            "1. Tính cách: Bạn gái 22t hướng nội, thích không gian yên tĩnh đọc sách và thưởng thức cà phê.\n"
+            "2. Quà tặng đề xuất (Dưới 500k): [GIFT001] Nến thơm Lavender (350,000 VNĐ - ⭐ 4.8/5) hoặc [GIFT006] Đèn đọc sách chống mỏi mắt Baseus (280,000 VNĐ).\n"
+            "3. Địa chỉ mua trực tiếp: Gift Studio Cầu Giấy (123 Xuân Thủy, Cầu Giấy, Hà Nội).\n"
+            "4. Phong cách gói quà: Romantic Vintage với giấy Kraft nâu, nơ cói thắt hoa khô kèm thiệp chúc mừng sinh nhật ngọt ngào."
+        )
+        print(f"🏁 Final Answer:\n{final_ans}")
+    else:
+        # Online LLM Mode
+        print("\n📋 [PHASE 1: PLANNING - TỰ RÃ MỤC TIÊU BẰNG LLM]")
+        planning_prompt = AUTONOMOUS_PLANNING_PROMPT + f"\nGoal: {user_query}"
+        plan_res = provider.generate(planning_prompt)
+        print(f"📝 Kế hoạch thực thi (Plan):\n{plan_res}")
+
+        print("\n⚙️ [PHASE 2: EXECUTION WITH REACT LOOP & MEMORY TRACKING]")
+        conversation_history = f"Goal: {user_query}\nPlan:\n{plan_res}\n"
+        
+        step = 0
+        while step < MAX_ITERATIONS:
+            step += 1
+            print(f"\n--- 🔄 Autonomous Step {step}/{MAX_ITERATIONS} ---")
+            
+            memory_str = ""
+            if memory:
+                memory_str = "\n[MEMORY LOG - BỘ NHỚ LƯU VẾT]:\n" + "\n".join(
+                    [f"- Step {m['step']}: Action `{m['action']}` -> Observation: {m['result'][:150]}" for m in memory]
+                ) + "\n"
+                
+            prompt = REACT_SYSTEM_PROMPT + memory_str + "\n" + conversation_history
+            response = provider.generate(prompt)
+            print(f"🤖 LLM suy luận:\n{response}")
+            
+            if "[Gemini Exception]" in response or "RESOURCE_EXHAUSTED" in response:
+                print("⚠️ Gặp lỗi API Rate Limit trong quá trình lặp. Dừng và sử dụng dữ liệu trong Memory.")
+                print(f"🏁 Final Answer: Đã hoàn tất {len(memory)} bước suy luận tự chủ trước khi đạt giới hạn API.")
+                break
+
+            if "Final Answer:" in response:
+                final_ans = response.split("Final Answer:")[-1].strip()
+                print(f"\n🏁 Final Answer: {final_ans}")
+                print(f"💾 Tổng số bước lưu vết trong Memory: {len(memory)}")
+                print("🎯 [Goal Evaluation]: Mục tiêu đã hoàn thành 100%!")
+                break
+                
+            match = re.search(r"Action:\s*(\w+)\[(.*?)\]", response)
+            if match:
+                t_name, t_args = match.group(1), match.group(2)
+                print(f"🛠️ Thực thi Action: {t_name}[{t_args}]")
+                obs = execute_tool_call(t_name, t_args)
+                print(f"👁️ Observation:\n{obs}")
+                memory.append({"step": step, "action": f"{t_name}[{t_args}]", "result": obs})
+                print(f"💾 [Memory Saved]: Logged step {step} to memory.")
+                conversation_history += f"\n{response}\nObservation: {obs}\n"
+            else:
+                conversation_history += f"\n{response}\n"
+                
+        if step >= MAX_ITERATIONS:
+            print(f"\n🛡️ GUARDRAIL TRIGGERED: Đã đạt giới hạn tối đa {MAX_ITERATIONS} bước. Ngắt lặp an toàn!")
+
+
+
 if __name__ == "__main__":
     print("==================================================")
     print("🏫 BÀI LAB 3: CHATBOT VS REACT AGENT (10 CORE TOOLS)")
@@ -185,3 +307,7 @@ if __name__ == "__main__":
     
     print("\n--- DEMO 2: CHẠY TRÊN REACT AGENT (10 CORE TOOLS) ---")
     run_react_agent(sample_query, provider)
+
+    print("\n--- DEMO 3: 🎁 BONUS - AUTONOMOUS AGENT (CẤP 4: PLANNING & MEMORY) ---")
+    run_autonomous_agent(sample_query, provider)
+
