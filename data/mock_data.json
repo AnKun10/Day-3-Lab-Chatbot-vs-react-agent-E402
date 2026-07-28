@@ -1,0 +1,4101 @@
+{
+  "dataset_metadata": {
+    "name": "Gift Personality Mock Catalog",
+    "schema_version": "1.0.0",
+    "language": "vi",
+    "currency": "VND",
+    "data_type": "synthetic_mock_data",
+    "description": "Catalog quà tặng, archetype, hồ sơ người nhận và tương tác giả lập để test LLM/ReAct Agent.",
+    "compatibility_note": "Giữ các trường id, name, category, price, tags, suitable_personality và rating để tương thích code hiện tại.",
+    "source_inspirations": [
+      {
+        "dataset": "IPIP Big Five / OpenPsychometrics",
+        "used_for": "Điểm OCEAN liên tục và hồ sơ tính cách mẫu.",
+        "copied_records": false
+      },
+      {
+        "dataset": "PACIFIC Big Five Trait Preferences",
+        "used_for": "Preference statements đa miền và trait-direction hints.",
+        "copied_records": false
+      },
+      {
+        "dataset": "ADS-16",
+        "used_for": "Tín hiệu shown, clicked, selected và rating.",
+        "copied_records": false
+      },
+      {
+        "dataset": "Amazon Reviews 2023",
+        "used_for": "Metadata sản phẩm, giá, rating, review count và review themes.",
+        "copied_records": false
+      }
+    ],
+    "safety_note": "Archetype và Big Five chỉ là tín hiệu gợi ý, không phải chẩn đoán tâm lý."
+  },
+  "field_descriptions": {
+    "id": "Mã duy nhất GIFTxxx.",
+    "name": "Tên sản phẩm giả lập.",
+    "description": "Mô tả trung tính về công dụng và bối cảnh sử dụng.",
+    "category": "Danh mục tiếng Anh ổn định để tool lọc.",
+    "category_label_vi": "Nhãn danh mục tiếng Việt.",
+    "price": "Giá số nguyên theo VND.",
+    "tags": "Từ khóa sở thích, công dụng, phong cách và ngữ cảnh.",
+    "suitable_personality": "Các archetype phù hợp tương đối, không phải chẩn đoán.",
+    "big_five_affinity": "Vector -2 đến 2 mô tả xu hướng liên quan giữa thuộc tính quà và OCEAN.",
+    "recipient_relationships": "Quan hệ thường phù hợp.",
+    "occasions": "Dịp tặng phù hợp.",
+    "avoid_if": "Điều kiện cần loại trừ hoặc hỏi lại.",
+    "rating": "Điểm đánh giá giả lập 1.0-5.0.",
+    "review_count": "Số review giả lập.",
+    "stock_status": "in_stock, low_stock hoặc out_of_stock.",
+    "lead_time_days": "Số ngày chuẩn bị hoặc giao giả lập."
+  },
+  "controlled_vocabularies": {
+    "gift_type": [
+      "practical",
+      "consumable",
+      "experience",
+      "personalized",
+      "creative",
+      "social",
+      "decor",
+      "fashion",
+      "traditional",
+      "educational"
+    ],
+    "relationships": [
+      "partner",
+      "friend",
+      "parent",
+      "sibling",
+      "family",
+      "colleague",
+      "boss",
+      "teacher",
+      "client",
+      "student",
+      "child",
+      "grandparent"
+    ],
+    "occasions": [
+      "birthday",
+      "anniversary",
+      "graduation",
+      "thank_you",
+      "holiday",
+      "housewarming",
+      "promotion",
+      "farewell",
+      "get_well",
+      "travel",
+      "back_to_school",
+      "team_bonding",
+      "family_event",
+      "wedding",
+      "reward",
+      "new_year",
+      "no_occasion"
+    ],
+    "stock_status": [
+      "in_stock",
+      "low_stock",
+      "out_of_stock"
+    ],
+    "price_bands_vnd": {
+      "under_200k": {
+        "min": 0,
+        "max": 199999
+      },
+      "200k_499k": {
+        "min": 200000,
+        "max": 499999
+      },
+      "500k_999k": {
+        "min": 500000,
+        "max": 999999
+      },
+      "1m_1m999": {
+        "min": 1000000,
+        "max": 1999999
+      },
+      "2m_plus": {
+        "min": 2000000,
+        "max": 10000000
+      }
+    }
+  },
+  "personality_archetypes": [
+    {
+      "name": "The Peaceful Intellectual",
+      "description_vi": "Ưa không gian yên tĩnh, đọc sách, học hỏi sâu và những món quà tinh tế.",
+      "signals": [
+        "hướng nội",
+        "đọc sách",
+        "yên tĩnh",
+        "không phô trương"
+      ],
+      "ocean_center": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": -2,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Calm Soul",
+      "description_vi": "Ưa nhịp sống nhẹ, ít kích thích và các hoạt động phục hồi năng lượng.",
+      "signals": [
+        "chill",
+        "nghỉ ngơi",
+        "êm dịu",
+        "không gian riêng"
+      ],
+      "ocean_center": {
+        "openness": 0,
+        "conscientiousness": 0,
+        "extraversion": -2,
+        "agreeableness": 1,
+        "neuroticism": 1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Mindful Caregiver",
+      "description_vi": "Quan tâm sự thoải mái, sức khỏe và nhu cầu thực tế của người khác.",
+      "signals": [
+        "chăm sóc",
+        "chu đáo",
+        "gia đình",
+        "sức khỏe"
+      ],
+      "ocean_center": {
+        "openness": 0,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 2,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Curious Explorer",
+      "description_vi": "Thích thử điều mới, khám phá kỹ năng, hương vị và trải nghiệm.",
+      "signals": [
+        "khám phá",
+        "thử cái mới",
+        "workshop",
+        "du lịch"
+      ],
+      "ocean_center": {
+        "openness": 2,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Traditional Connoisseur",
+      "description_vi": "Trân trọng chất liệu thủ công, nghi thức và phong cách truyền thống.",
+      "signals": [
+        "truyền thống",
+        "trà",
+        "gốm",
+        "thủ công"
+      ],
+      "ocean_center": {
+        "openness": -1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Diligent Planner",
+      "description_vi": "Có tổ chức, thích chuẩn bị, ghi chép và công cụ hỗ trợ hiệu suất.",
+      "signals": [
+        "lập kế hoạch",
+        "tỉ mỉ",
+        "học tập",
+        "đúng giờ"
+      ],
+      "ocean_center": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": -1,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Focused Creator",
+      "description_vi": "Cần môi trường tập trung để viết, thiết kế, lập trình hoặc sáng tạo.",
+      "signals": [
+        "tập trung",
+        "sáng tạo",
+        "làm việc sâu",
+        "góc làm việc"
+      ],
+      "ocean_center": {
+        "openness": 2,
+        "conscientiousness": 2,
+        "extraversion": -1,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Aesthetic Creator",
+      "description_vi": "Nhạy với thẩm mỹ, màu sắc, thủ công và đồ vật có câu chuyện.",
+      "signals": [
+        "vẽ",
+        "thiết kế",
+        "móc len",
+        "trang trí"
+      ],
+      "ocean_center": {
+        "openness": 2,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Tech Enthusiast",
+      "description_vi": "Quan tâm thiết bị, tính năng mới, hiệu suất và trải nghiệm công nghệ.",
+      "signals": [
+        "công nghệ",
+        "game",
+        "lập trình",
+        "gadget"
+      ],
+      "ocean_center": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Practical Minimalist",
+      "description_vi": "Ưu tiên đồ hữu ích, bền, gọn và không tạo thêm vật dụng thừa.",
+      "signals": [
+        "thực tế",
+        "tối giản",
+        "gọn gàng",
+        "đa dụng"
+      ],
+      "ocean_center": {
+        "openness": -1,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Playful Socializer",
+      "description_vi": "Thích giao tiếp, âm nhạc, hoạt động nhóm và không khí vui vẻ.",
+      "signals": [
+        "tụ tập",
+        "karaoke",
+        "bạn bè",
+        "tiệc"
+      ],
+      "ocean_center": {
+        "openness": 1,
+        "conscientiousness": -1,
+        "extraversion": 2,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Active Adventurer",
+      "description_vi": "Thích vận động, di chuyển, hoạt động ngoài trời và trải nghiệm mới.",
+      "signals": [
+        "gym",
+        "chạy bộ",
+        "du lịch",
+        "ngoài trời"
+      ],
+      "ocean_center": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 2,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Health Enthusiast",
+      "description_vi": "Quan tâm thói quen vận động, dinh dưỡng và lối sống có tổ chức.",
+      "signals": [
+        "fitness",
+        "lành mạnh",
+        "sức khỏe",
+        "thói quen tốt"
+      ],
+      "ocean_center": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Elegant Professional",
+      "description_vi": "Đề cao sự chỉn chu, chất lượng hoàn thiện và tính phù hợp bối cảnh.",
+      "signals": [
+        "sếp",
+        "đối tác",
+        "lịch thiệp",
+        "tinh tế"
+      ],
+      "ocean_center": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Warm Connector",
+      "description_vi": "Coi trọng quan hệ, kỷ niệm chung và thông điệp cảm xúc.",
+      "signals": [
+        "gia đình",
+        "kỷ niệm",
+        "bạn bè",
+        "chia sẻ"
+      ],
+      "ocean_center": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 2,
+        "neuroticism": 0
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Nature Lover",
+      "description_vi": "Gắn với cây xanh, hoạt động ngoài trời và vật liệu tự nhiên.",
+      "signals": [
+        "cây xanh",
+        "thiên nhiên",
+        "cắm trại",
+        "môi trường"
+      ],
+      "ocean_center": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    },
+    {
+      "name": "The Social Foodie",
+      "description_vi": "Thích khám phá đồ ăn thức uống và dùng ẩm thực để kết nối.",
+      "signals": [
+        "cà phê",
+        "đồ ăn",
+        "nấu ăn",
+        "chia sẻ"
+      ],
+      "ocean_center": {
+        "openness": 2,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "avoid_overgeneralization": "Không suy diễn chắc chắn sở thích chỉ từ một nhãn tính cách."
+    }
+  ],
+  "mock_products_database": [
+    {
+      "id": "GIFT001",
+      "name": "Nến thơm Lavender & Gỗ thông hộp vintage",
+      "description": "Nến thơm Lavender & Gỗ thông hộp vintage là món quà giả lập thuộc nhóm thư giãn, phù hợp khi người nhận quan tâm đến hướng nội, chill, thư giãn.",
+      "category": "Chill & Relaxation",
+      "category_label_vi": "Thư giãn",
+      "subcategory": "Chill",
+      "price": 350000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "hướng nội",
+        "chill",
+        "thư giãn",
+        "vintage",
+        "đọc sách",
+        "không gian riêng"
+      ],
+      "suitable_personality": [
+        "The Peaceful Intellectual",
+        "The Calm Soul"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 0,
+        "extraversion": -2,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "consumable",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "holiday"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn",
+        "vintage"
+      ],
+      "practical_score": 3,
+      "emotional_score": 3,
+      "novelty_score": 3,
+      "personalization_options": [
+        "nhãn tên",
+        "thiệp"
+      ],
+      "avoid_if": [
+        "dị ứng hương liệu",
+        "không thích mùi thơm"
+      ],
+      "rating": 4.5,
+      "review_count": 397,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng hương liệu",
+        "không thích mùi thơm"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT002",
+      "name": "Bộ bịt mắt ngủ và túi chườm thảo mộc",
+      "description": "Bộ bịt mắt ngủ và túi chườm thảo mộc là món quà giả lập thuộc nhóm thư giãn, phù hợp khi người nhận quan tâm đến ngủ ngon, thư giãn, self-care.",
+      "category": "Chill & Relaxation",
+      "category_label_vi": "Thư giãn",
+      "subcategory": "Chill",
+      "price": 280000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "ngủ ngon",
+        "thư giãn",
+        "self-care",
+        "êm dịu",
+        "nghỉ ngơi"
+      ],
+      "suitable_personality": [
+        "The Calm Soul",
+        "The Mindful Caregiver"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 0,
+        "extraversion": -1,
+        "agreeableness": 2,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "partner",
+        "parent",
+        "friend"
+      ],
+      "occasions": [
+        "birthday",
+        "get_well",
+        "no_occasion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "thêu tên"
+      ],
+      "avoid_if": [
+        "dị ứng thảo mộc",
+        "đang điều trị bệnh mắt"
+      ],
+      "rating": 4.6,
+      "review_count": 714,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng thảo mộc",
+        "đang điều trị bệnh mắt"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT003",
+      "name": "Bộ trà thảo mộc thử vị",
+      "description": "Bộ trà thảo mộc thử vị là món quà giả lập thuộc nhóm thư giãn, phù hợp khi người nhận quan tâm đến trà, thư giãn, khám phá hương vị.",
+      "category": "Chill & Relaxation",
+      "category_label_vi": "Thư giãn",
+      "subcategory": "Chill",
+      "price": 320000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "trà",
+        "thư giãn",
+        "khám phá hương vị",
+        "ấm áp",
+        "hướng nội"
+      ],
+      "suitable_personality": [
+        "The Peaceful Intellectual",
+        "The Curious Explorer",
+        "The Traditional Connoisseur"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "consumable",
+      "recipient_relationships": [
+        "parent",
+        "partner",
+        "teacher"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "housewarming"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn"
+      ],
+      "practical_score": 3,
+      "emotional_score": 3,
+      "novelty_score": 3,
+      "personalization_options": [
+        "chọn nhóm vị",
+        "thiệp"
+      ],
+      "avoid_if": [
+        "dị ứng thành phần",
+        "hạn chế caffeine"
+      ],
+      "rating": 4.7,
+      "review_count": 1031,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng thành phần",
+        "hạn chế caffeine"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT004",
+      "name": "Đèn đọc sách cảm ứng chống chói",
+      "description": "Đèn đọc sách cảm ứng chống chói là món quà giả lập thuộc nhóm đọc sách và học tập, phù hợp khi người nhận quan tâm đến đọc sách, học tập, tập trung.",
+      "category": "Book Lover & Study",
+      "category_label_vi": "Đọc sách và học tập",
+      "subcategory": "Book Lover",
+      "price": 480000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "đọc sách",
+        "học tập",
+        "tập trung",
+        "tỉ mỉ",
+        "đèn led"
+      ],
+      "suitable_personality": [
+        "The Peaceful Intellectual",
+        "The Diligent Planner",
+        "The Focused Creator"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 2,
+        "extraversion": -1,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "student",
+        "partner",
+        "friend"
+      ],
+      "occasions": [
+        "birthday",
+        "graduation",
+        "back_to_school"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "khắc tên"
+      ],
+      "avoid_if": [
+        "không có góc đọc sách"
+      ],
+      "rating": 4.8,
+      "review_count": 1348,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không có góc đọc sách"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT005",
+      "name": "Dấu dập nổi tên cá nhân cho sách",
+      "description": "Dấu dập nổi tên cá nhân cho sách là món quà giả lập thuộc nhóm đọc sách và học tập, phù hợp khi người nhận quan tâm đến đọc sách, cá nhân hóa, sưu tầm.",
+      "category": "Book Lover & Study",
+      "category_label_vi": "Đọc sách và học tập",
+      "subcategory": "Book Lover",
+      "price": 560000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "đọc sách",
+        "cá nhân hóa",
+        "sưu tầm",
+        "tinh tế",
+        "độc đáo"
+      ],
+      "suitable_personality": [
+        "The Peaceful Intellectual",
+        "The Aesthetic Creator",
+        "The Traditional Connoisseur"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": -1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "personalized",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "teacher"
+      ],
+      "occasions": [
+        "birthday",
+        "graduation",
+        "thank_you"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "cá nhân hóa",
+        "tinh tế"
+      ],
+      "practical_score": 2,
+      "emotional_score": 5,
+      "novelty_score": 4,
+      "personalization_options": [
+        "tên",
+        "biểu tượng"
+      ],
+      "avoid_if": [
+        "chủ yếu đọc sách điện tử",
+        "không muốn đóng dấu lên sách"
+      ],
+      "rating": 4.9,
+      "review_count": 1665,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "chủ yếu đọc sách điện tử",
+        "không muốn đóng dấu lên sách"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT006",
+      "name": "Mô hình Book Nook tự lắp có đèn",
+      "description": "Mô hình Book Nook tự lắp có đèn là món quà giả lập thuộc nhóm đọc sách và học tập, phù hợp khi người nhận quan tâm đến đọc sách, mô hình, diy.",
+      "category": "Book Lover & Study",
+      "category_label_vi": "Đọc sách và học tập",
+      "subcategory": "Book Lover",
+      "price": 720000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "đọc sách",
+        "mô hình",
+        "diy",
+        "sáng tạo",
+        "kiên nhẫn",
+        "trang trí"
+      ],
+      "suitable_personality": [
+        "The Aesthetic Creator",
+        "The Curious Explorer",
+        "The Peaceful Intellectual"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "creative",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "graduation"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "sáng tạo"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn chủ đề"
+      ],
+      "avoid_if": [
+        "không thích lắp ráp",
+        "nhà có trẻ nhỏ"
+      ],
+      "rating": 4.4,
+      "review_count": 1982,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích lắp ráp",
+        "nhà có trẻ nhỏ"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT007",
+      "name": "Tai nghe Bluetooth chống ồn",
+      "description": "Tai nghe Bluetooth chống ồn là món quà giả lập thuộc nhóm công nghệ và âm thanh, phù hợp khi người nhận quan tâm đến công nghệ, âm nhạc, chống ồn.",
+      "category": "Technology & Audio",
+      "category_label_vi": "Công nghệ và âm thanh",
+      "subcategory": "Technology",
+      "price": 950000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "công nghệ",
+        "âm nhạc",
+        "chống ồn",
+        "game",
+        "tập trung"
+      ],
+      "suitable_personality": [
+        "The Tech Enthusiast",
+        "The Focused Creator",
+        "The Practical Minimalist"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "sibling",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "graduation",
+        "promotion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "khắc chữ hộp"
+      ],
+      "avoid_if": [
+        "đã có tai nghe tốt",
+        "không thích tai nghe chụp tai"
+      ],
+      "rating": 4.5,
+      "review_count": 2299,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "đã có tai nghe tốt",
+        "không thích tai nghe chụp tai"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT008",
+      "name": "Thẻ định vị đồ dùng thông minh",
+      "description": "Thẻ định vị đồ dùng thông minh là món quà giả lập thuộc nhóm công nghệ và âm thanh, phù hợp khi người nhận quan tâm đến công nghệ, thực tế, hay quên.",
+      "category": "Technology & Audio",
+      "category_label_vi": "Công nghệ và âm thanh",
+      "subcategory": "Technology",
+      "price": 390000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "công nghệ",
+        "thực tế",
+        "hay quên",
+        "du lịch",
+        "tổ chức"
+      ],
+      "suitable_personality": [
+        "The Practical Minimalist",
+        "The Tech Enthusiast",
+        "The Diligent Planner"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "parent",
+        "partner",
+        "friend",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "travel",
+        "no_occasion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "khắc tên"
+      ],
+      "avoid_if": [
+        "điện thoại không tương thích",
+        "lo ngại quyền riêng tư"
+      ],
+      "rating": 4.6,
+      "review_count": 2616,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "điện thoại không tương thích",
+        "lo ngại quyền riêng tư"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT009",
+      "name": "Loa Bluetooth mini chống nước",
+      "description": "Loa Bluetooth mini chống nước là món quà giả lập thuộc nhóm công nghệ và âm thanh, phù hợp khi người nhận quan tâm đến âm nhạc, công nghệ, du lịch.",
+      "category": "Technology & Audio",
+      "category_label_vi": "Công nghệ và âm thanh",
+      "subcategory": "Technology",
+      "price": 680000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "âm nhạc",
+        "công nghệ",
+        "du lịch",
+        "tụ tập",
+        "ngoài trời"
+      ],
+      "suitable_personality": [
+        "The Playful Socializer",
+        "The Active Adventurer",
+        "The Tech Enthusiast"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "social",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "travel"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "ngoài trời"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 4,
+      "personalization_options": [
+        "in tên túi"
+      ],
+      "avoid_if": [
+        "sống trong không gian cần yên tĩnh"
+      ],
+      "rating": 4.7,
+      "review_count": 2933,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "sống trong không gian cần yên tĩnh"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT010",
+      "name": "Bàn phím cơ không dây phong cách máy đánh chữ",
+      "description": "Bàn phím cơ không dây phong cách máy đánh chữ là món quà giả lập thuộc nhóm công nghệ và góc làm việc, phù hợp khi người nhận quan tâm đến công nghệ, bàn phím cơ, gõ văn bản.",
+      "category": "Technology & Workplace",
+      "category_label_vi": "Công nghệ và góc làm việc",
+      "subcategory": "Technology",
+      "price": 1200000,
+      "currency": "VND",
+      "price_band": "1m_1m999",
+      "tags": [
+        "công nghệ",
+        "bàn phím cơ",
+        "gõ văn bản",
+        "vintage",
+        "sáng tạo"
+      ],
+      "suitable_personality": [
+        "The Tech Enthusiast",
+        "The Aesthetic Creator",
+        "The Focused Creator"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "promotion",
+        "graduation"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "vintage",
+        "sáng tạo"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "keycap tên"
+      ],
+      "avoid_if": [
+        "không thích tiếng gõ",
+        "cần bố cục phím đặc biệt"
+      ],
+      "rating": 4.8,
+      "review_count": 3250,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích tiếng gõ",
+        "cần bố cục phím đặc biệt"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT011",
+      "name": "Chuột công thái học không dây",
+      "description": "Chuột công thái học không dây là món quà giả lập thuộc nhóm công nghệ và góc làm việc, phù hợp khi người nhận quan tâm đến công nghệ, công thái học, văn phòng.",
+      "category": "Technology & Workplace",
+      "category_label_vi": "Công nghệ và góc làm việc",
+      "subcategory": "Technology",
+      "price": 620000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "công nghệ",
+        "công thái học",
+        "văn phòng",
+        "thực tế",
+        "tập trung"
+      ],
+      "suitable_personality": [
+        "The Diligent Planner",
+        "The Practical Minimalist",
+        "The Focused Creator"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": -1,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "colleague",
+        "partner",
+        "friend"
+      ],
+      "occasions": [
+        "birthday",
+        "promotion",
+        "thank_you"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [],
+      "avoid_if": [
+        "thuận tay trái nếu mẫu tay phải",
+        "đã quen chuột gaming"
+      ],
+      "rating": 4.9,
+      "review_count": 3567,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "thuận tay trái nếu mẫu tay phải",
+        "đã quen chuột gaming"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT012",
+      "name": "Đèn bàn thông minh kèm sạc không dây",
+      "description": "Đèn bàn thông minh kèm sạc không dây là món quà giả lập thuộc nhóm công nghệ và góc làm việc, phù hợp khi người nhận quan tâm đến đèn bàn, công nghệ, sạc không dây.",
+      "category": "Technology & Workplace",
+      "category_label_vi": "Công nghệ và góc làm việc",
+      "subcategory": "Technology",
+      "price": 890000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "đèn bàn",
+        "công nghệ",
+        "sạc không dây",
+        "học tập",
+        "gọn gàng"
+      ],
+      "suitable_personality": [
+        "The Tech Enthusiast",
+        "The Diligent Planner",
+        "The Practical Minimalist"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "student",
+        "partner",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "graduation",
+        "back_to_school"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "khắc tên"
+      ],
+      "avoid_if": [
+        "điện thoại không hỗ trợ sạc không dây"
+      ],
+      "rating": 4.4,
+      "review_count": 3884,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "điện thoại không hỗ trợ sạc không dây"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT013",
+      "name": "Bộ ấm trà gốm vẽ tay phong cách Zen",
+      "description": "Bộ ấm trà gốm vẽ tay phong cách Zen là món quà giả lập thuộc nhóm tinh tế và trà, phù hợp khi người nhận quan tâm đến trà, gốm, tinh tế.",
+      "category": "Elegance & Tea",
+      "category_label_vi": "Tinh tế và trà",
+      "subcategory": "Elegance",
+      "price": 850000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "trà",
+        "gốm",
+        "tinh tế",
+        "sang trọng",
+        "truyền thống",
+        "tiếp khách"
+      ],
+      "suitable_personality": [
+        "The Elegant Professional",
+        "The Traditional Connoisseur",
+        "The Mindful Caregiver"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "traditional",
+      "recipient_relationships": [
+        "parent",
+        "boss",
+        "teacher",
+        "client"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "housewarming"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "tinh tế",
+        "sang trọng",
+        "truyền thống"
+      ],
+      "practical_score": 4,
+      "emotional_score": 4,
+      "novelty_score": 2,
+      "personalization_options": [
+        "khắc hộp gỗ"
+      ],
+      "avoid_if": [
+        "không uống trà",
+        "nhà ít chỗ lưu trữ"
+      ],
+      "rating": 4.5,
+      "review_count": 4201,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không uống trà",
+        "nhà ít chỗ lưu trữ"
+      ],
+      "stock_status": "low_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT014",
+      "name": "Sổ da thủ công và bút máy ký tên",
+      "description": "Sổ da thủ công và bút máy ký tên là món quà giả lập thuộc nhóm văn phòng phẩm tinh tế, phù hợp khi người nhận quan tâm đến sổ da, bút máy, viết lách.",
+      "category": "Elegance & Stationery",
+      "category_label_vi": "Văn phòng phẩm tinh tế",
+      "subcategory": "Elegance",
+      "price": 650000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "sổ da",
+        "bút máy",
+        "viết lách",
+        "sang trọng",
+        "kế hoạch"
+      ],
+      "suitable_personality": [
+        "The Elegant Professional",
+        "The Aesthetic Creator",
+        "The Diligent Planner"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "personalized",
+      "recipient_relationships": [
+        "boss",
+        "teacher",
+        "colleague",
+        "partner"
+      ],
+      "occasions": [
+        "graduation",
+        "promotion",
+        "thank_you"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "sang trọng"
+      ],
+      "practical_score": 2,
+      "emotional_score": 5,
+      "novelty_score": 4,
+      "personalization_options": [
+        "khắc tên",
+        "in logo nhỏ"
+      ],
+      "avoid_if": [
+        "không dùng sổ giấy"
+      ],
+      "rating": 4.6,
+      "review_count": 4518,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không dùng sổ giấy"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT015",
+      "name": "Khăn lụa họa tiết tối giản",
+      "description": "Khăn lụa họa tiết tối giản là món quà giả lập thuộc nhóm thời trang tinh tế, phù hợp khi người nhận quan tâm đến thời trang, tinh tế, sang trọng.",
+      "category": "Elegance & Fashion",
+      "category_label_vi": "Thời trang tinh tế",
+      "subcategory": "Elegance",
+      "price": 790000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "thời trang",
+        "tinh tế",
+        "sang trọng",
+        "tối giản",
+        "phụ kiện"
+      ],
+      "suitable_personality": [
+        "The Elegant Professional",
+        "The Aesthetic Creator",
+        "The Warm Connector"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "fashion",
+      "recipient_relationships": [
+        "partner",
+        "parent",
+        "boss",
+        "teacher"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "anniversary"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "tinh tế",
+        "sang trọng",
+        "tối giản"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 3,
+      "personalization_options": [
+        "chọn màu",
+        "thiệp"
+      ],
+      "avoid_if": [
+        "không dùng khăn",
+        "nhạy cảm chất liệu"
+      ],
+      "rating": 4.7,
+      "review_count": 4835,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không dùng khăn",
+        "nhạy cảm chất liệu"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT016",
+      "name": "Bình giữ nhiệt thể thao 750 ml",
+      "description": "Bình giữ nhiệt thể thao 750 ml là món quà giả lập thuộc nhóm thể thao và sức khỏe, phù hợp khi người nhận quan tâm đến thể thao, gym, chạy bộ.",
+      "category": "Sports & Fitness",
+      "category_label_vi": "Thể thao và sức khỏe",
+      "subcategory": "Sports",
+      "price": 420000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "thể thao",
+        "gym",
+        "chạy bộ",
+        "năng động",
+        "du lịch",
+        "thực tế"
+      ],
+      "suitable_personality": [
+        "The Active Adventurer",
+        "The Health Enthusiast",
+        "The Practical Minimalist"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "graduation",
+        "travel"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "khắc tên",
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "đã có nhiều bình nước"
+      ],
+      "rating": 4.8,
+      "review_count": 352,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "đã có nhiều bình nước"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT017",
+      "name": "Bộ dây kháng lực tập tại nhà",
+      "description": "Bộ dây kháng lực tập tại nhà là món quà giả lập thuộc nhóm thể thao và sức khỏe, phù hợp khi người nhận quan tâm đến fitness, gym, tập tại nhà.",
+      "category": "Sports & Fitness",
+      "category_label_vi": "Thể thao và sức khỏe",
+      "subcategory": "Sports",
+      "price": 260000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "fitness",
+        "gym",
+        "tập tại nhà",
+        "sức khỏe",
+        "gọn nhẹ"
+      ],
+      "suitable_personality": [
+        "The Active Adventurer",
+        "The Health Enthusiast",
+        "The Diligent Planner"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "new_year",
+        "no_occasion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "gọn nhẹ"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "in tên túi"
+      ],
+      "avoid_if": [
+        "chấn thương cần tư vấn chuyên môn",
+        "không thích tập"
+      ],
+      "rating": 4.9,
+      "review_count": 669,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "chấn thương cần tư vấn chuyên môn",
+        "không thích tập"
+      ],
+      "stock_status": "out_of_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT018",
+      "name": "Đai chạy bộ đựng điện thoại",
+      "description": "Đai chạy bộ đựng điện thoại là món quà giả lập thuộc nhóm thể thao và sức khỏe, phù hợp khi người nhận quan tâm đến chạy bộ, ngoài trời, thể thao.",
+      "category": "Sports & Fitness",
+      "category_label_vi": "Thể thao và sức khỏe",
+      "subcategory": "Sports",
+      "price": 180000,
+      "currency": "VND",
+      "price_band": "under_200k",
+      "tags": [
+        "chạy bộ",
+        "ngoài trời",
+        "thể thao",
+        "gọn nhẹ",
+        "thực tế"
+      ],
+      "suitable_personality": [
+        "The Active Adventurer",
+        "The Practical Minimalist",
+        "The Health Enthusiast"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "travel",
+        "no_occasion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "ngoài trời",
+        "gọn nhẹ"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "điện thoại quá lớn",
+        "không chạy bộ"
+      ],
+      "rating": 4.4,
+      "review_count": 986,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "điện thoại quá lớn",
+        "không chạy bộ"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT019",
+      "name": "Bộ móc len dành cho người mới",
+      "description": "Bộ móc len dành cho người mới là món quà giả lập thuộc nhóm sáng tạo và thủ công, phù hợp khi người nhận quan tâm đến móc len, thủ công, sáng tạo.",
+      "category": "Creative & DIY",
+      "category_label_vi": "Sáng tạo và thủ công",
+      "subcategory": "Creative",
+      "price": 360000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "móc len",
+        "thủ công",
+        "sáng tạo",
+        "hướng nội",
+        "diy",
+        "kiên nhẫn"
+      ],
+      "suitable_personality": [
+        "The Aesthetic Creator",
+        "The Peaceful Intellectual",
+        "The Curious Explorer"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "creative",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "graduation"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "sáng tạo"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn mẫu",
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "không thích việc tỉ mỉ",
+        "dị ứng sợi len"
+      ],
+      "rating": 4.5,
+      "review_count": 1303,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích việc tỉ mỉ",
+        "dị ứng sợi len"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT020",
+      "name": "Bộ tranh tô màu theo số",
+      "description": "Bộ tranh tô màu theo số là món quà giả lập thuộc nhóm sáng tạo và thủ công, phù hợp khi người nhận quan tâm đến vẽ, màu sắc, thư giãn.",
+      "category": "Creative & DIY",
+      "category_label_vi": "Sáng tạo và thủ công",
+      "subcategory": "Creative",
+      "price": 290000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "vẽ",
+        "màu sắc",
+        "thư giãn",
+        "diy",
+        "sáng tạo",
+        "tập trung"
+      ],
+      "suitable_personality": [
+        "The Aesthetic Creator",
+        "The Calm Soul",
+        "The Curious Explorer"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "creative",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "student"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "no_occasion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn",
+        "sáng tạo"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn chủ đề"
+      ],
+      "avoid_if": [
+        "thị lực kém với chi tiết nhỏ"
+      ],
+      "rating": 4.6,
+      "review_count": 1620,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "thị lực kém với chi tiết nhỏ"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT021",
+      "name": "Voucher workshop làm gốm",
+      "description": "Voucher workshop làm gốm là món quà giả lập thuộc nhóm sáng tạo và thủ công, phù hợp khi người nhận quan tâm đến gốm, workshop, trải nghiệm.",
+      "category": "Creative & DIY",
+      "category_label_vi": "Sáng tạo và thủ công",
+      "subcategory": "Creative",
+      "price": 650000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "gốm",
+        "workshop",
+        "trải nghiệm",
+        "sáng tạo",
+        "hẹn hò"
+      ],
+      "suitable_personality": [
+        "The Curious Explorer",
+        "The Aesthetic Creator",
+        "The Warm Connector"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "experience",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "team_bonding"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "sáng tạo"
+      ],
+      "practical_score": 1,
+      "emotional_score": 5,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn lịch",
+        "lời nhắn"
+      ],
+      "avoid_if": [
+        "khó sắp xếp lịch",
+        "ngại hoạt động nhóm"
+      ],
+      "rating": 4.7,
+      "review_count": 1937,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "khó sắp xếp lịch",
+        "ngại hoạt động nhóm"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT022",
+      "name": "Bộ túi chia hành lý sáu món",
+      "description": "Bộ túi chia hành lý sáu món là món quà giả lập thuộc nhóm du lịch và ngoài trời, phù hợp khi người nhận quan tâm đến du lịch, tổ chức, gọn gàng.",
+      "category": "Travel & Outdoors",
+      "category_label_vi": "Du lịch và ngoài trời",
+      "subcategory": "Travel",
+      "price": 310000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "du lịch",
+        "tổ chức",
+        "gọn gàng",
+        "vali",
+        "thực tế"
+      ],
+      "suitable_personality": [
+        "The Diligent Planner",
+        "The Active Adventurer",
+        "The Practical Minimalist"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "parent"
+      ],
+      "occasions": [
+        "birthday",
+        "travel",
+        "graduation"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "thêu tên"
+      ],
+      "avoid_if": [
+        "ít đi du lịch",
+        "chỉ dùng balo nhỏ"
+      ],
+      "rating": 4.8,
+      "review_count": 2254,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "ít đi du lịch",
+        "chỉ dùng balo nhỏ"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT023",
+      "name": "Bộ picnic gấp gọn cho hai người",
+      "description": "Bộ picnic gấp gọn cho hai người là món quà giả lập thuộc nhóm du lịch và ngoài trời, phù hợp khi người nhận quan tâm đến picnic, ngoài trời, hẹn hò.",
+      "category": "Travel & Outdoors",
+      "category_label_vi": "Du lịch và ngoài trời",
+      "subcategory": "Travel",
+      "price": 780000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "picnic",
+        "ngoài trời",
+        "hẹn hò",
+        "bạn bè",
+        "trải nghiệm"
+      ],
+      "suitable_personality": [
+        "The Active Adventurer",
+        "The Warm Connector",
+        "The Playful Socializer"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 2,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "gift_type": "experience",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "family"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "holiday"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "ngoài trời"
+      ],
+      "practical_score": 1,
+      "emotional_score": 5,
+      "novelty_score": 5,
+      "personalization_options": [
+        "thêu chữ"
+      ],
+      "avoid_if": [
+        "không thích ngoài trời",
+        "khó bảo quản đồ cồng kềnh"
+      ],
+      "rating": 4.9,
+      "review_count": 2571,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích ngoài trời",
+        "khó bảo quản đồ cồng kềnh"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT024",
+      "name": "Võng du lịch siêu nhẹ",
+      "description": "Võng du lịch siêu nhẹ là món quà giả lập thuộc nhóm du lịch và ngoài trời, phù hợp khi người nhận quan tâm đến cắm trại, phượt, ngoài trời.",
+      "category": "Travel & Outdoors",
+      "category_label_vi": "Du lịch và ngoài trời",
+      "subcategory": "Travel",
+      "price": 460000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "cắm trại",
+        "phượt",
+        "ngoài trời",
+        "du lịch",
+        "gọn nhẹ"
+      ],
+      "suitable_personality": [
+        "The Active Adventurer",
+        "The Nature Lover",
+        "The Curious Explorer"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "travel",
+        "holiday"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "ngoài trời",
+        "gọn nhẹ"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "không đi cắm trại",
+        "không có điểm treo an toàn"
+      ],
+      "rating": 4.4,
+      "review_count": 2888,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không đi cắm trại",
+        "không có điểm treo an toàn"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT025",
+      "name": "Hộp cà phê đặc sản ba vùng",
+      "description": "Hộp cà phê đặc sản ba vùng là món quà giả lập thuộc nhóm ẩm thực và đồ uống, phù hợp khi người nhận quan tâm đến cà phê, khám phá hương vị, đồ uống.",
+      "category": "Food & Beverage",
+      "category_label_vi": "Ẩm thực và đồ uống",
+      "subcategory": "Food",
+      "price": 390000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "cà phê",
+        "khám phá hương vị",
+        "đồ uống",
+        "buổi sáng",
+        "foodie"
+      ],
+      "suitable_personality": [
+        "The Curious Explorer",
+        "The Diligent Planner",
+        "The Social Foodie"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "consumable",
+      "recipient_relationships": [
+        "friend",
+        "partner",
+        "colleague",
+        "boss"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "promotion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 3,
+      "emotional_score": 3,
+      "novelty_score": 3,
+      "personalization_options": [
+        "chọn mức rang",
+        "thiệp"
+      ],
+      "avoid_if": [
+        "không uống caffeine",
+        "nhạy cảm cà phê"
+      ],
+      "rating": 4.5,
+      "review_count": 3205,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không uống caffeine",
+        "nhạy cảm cà phê"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT026",
+      "name": "Hộp chocolate thử vị",
+      "description": "Hộp chocolate thử vị là món quà giả lập thuộc nhóm ẩm thực và đồ uống, phù hợp khi người nhận quan tâm đến chocolate, đồ ngọt, trải nghiệm.",
+      "category": "Food & Beverage",
+      "category_label_vi": "Ẩm thực và đồ uống",
+      "subcategory": "Food",
+      "price": 450000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "chocolate",
+        "đồ ngọt",
+        "trải nghiệm",
+        "hẹn hò",
+        "chia sẻ"
+      ],
+      "suitable_personality": [
+        "The Warm Connector",
+        "The Curious Explorer",
+        "The Social Foodie"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "gift_type": "consumable",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "parent",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "holiday"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 3,
+      "emotional_score": 3,
+      "novelty_score": 3,
+      "personalization_options": [
+        "chọn vị không cồn",
+        "thiệp"
+      ],
+      "avoid_if": [
+        "dị ứng sữa hoặc hạt",
+        "không ăn đồ ngọt"
+      ],
+      "rating": 4.6,
+      "review_count": 3522,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng sữa hoặc hạt",
+        "không ăn đồ ngọt"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT027",
+      "name": "Giỏ đồ ăn nhẹ lành mạnh",
+      "description": "Giỏ đồ ăn nhẹ lành mạnh là món quà giả lập thuộc nhóm ẩm thực và đồ uống, phù hợp khi người nhận quan tâm đến đồ ăn nhẹ, lành mạnh, văn phòng.",
+      "category": "Food & Beverage",
+      "category_label_vi": "Ẩm thực và đồ uống",
+      "subcategory": "Food",
+      "price": 520000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "đồ ăn nhẹ",
+        "lành mạnh",
+        "văn phòng",
+        "chia sẻ",
+        "thực tế"
+      ],
+      "suitable_personality": [
+        "The Health Enthusiast",
+        "The Practical Minimalist",
+        "The Warm Connector"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 1,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "consumable",
+      "recipient_relationships": [
+        "colleague",
+        "family",
+        "friend",
+        "client"
+      ],
+      "occasions": [
+        "thank_you",
+        "holiday",
+        "housewarming"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 3,
+      "emotional_score": 3,
+      "novelty_score": 3,
+      "personalization_options": [
+        "chọn ít đường",
+        "thiệp"
+      ],
+      "avoid_if": [
+        "dị ứng hạt",
+        "chế độ ăn đặc biệt"
+      ],
+      "rating": 4.7,
+      "review_count": 3839,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng hạt",
+        "chế độ ăn đặc biệt"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT028",
+      "name": "Terrarium cây xanh để bàn",
+      "description": "Terrarium cây xanh để bàn là món quà giả lập thuộc nhóm nhà cửa và trang trí, phù hợp khi người nhận quan tâm đến cây xanh, thiên nhiên, trang trí.",
+      "category": "Home & Decor",
+      "category_label_vi": "Nhà cửa và trang trí",
+      "subcategory": "Home",
+      "price": 380000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "cây xanh",
+        "thiên nhiên",
+        "trang trí",
+        "bàn làm việc",
+        "tối giản"
+      ],
+      "suitable_personality": [
+        "The Nature Lover",
+        "The Calm Soul",
+        "The Aesthetic Creator"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "decor",
+      "recipient_relationships": [
+        "friend",
+        "colleague",
+        "partner",
+        "teacher"
+      ],
+      "occasions": [
+        "birthday",
+        "housewarming",
+        "thank_you"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "tối giản"
+      ],
+      "practical_score": 2,
+      "emotional_score": 3,
+      "novelty_score": 3,
+      "personalization_options": [
+        "thẻ tên",
+        "chọn cây"
+      ],
+      "avoid_if": [
+        "không thích chăm cây",
+        "nhà có thú cưng ăn cây"
+      ],
+      "rating": 4.8,
+      "review_count": 4156,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích chăm cây",
+        "nhà có thú cưng ăn cây"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT029",
+      "name": "Khung ảnh số để bàn",
+      "description": "Khung ảnh số để bàn là món quà giả lập thuộc nhóm nhà cửa và trang trí, phù hợp khi người nhận quan tâm đến ảnh, gia đình, kỷ niệm.",
+      "category": "Home & Decor",
+      "category_label_vi": "Nhà cửa và trang trí",
+      "subcategory": "Home",
+      "price": 1350000,
+      "currency": "VND",
+      "price_band": "1m_1m999",
+      "tags": [
+        "ảnh",
+        "gia đình",
+        "kỷ niệm",
+        "công nghệ",
+        "cá nhân hóa"
+      ],
+      "suitable_personality": [
+        "The Warm Connector",
+        "The Tech Enthusiast",
+        "The Mindful Caregiver"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "personalized",
+      "recipient_relationships": [
+        "parent",
+        "partner",
+        "family",
+        "grandparent"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "family_event"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "cá nhân hóa"
+      ],
+      "practical_score": 2,
+      "emotional_score": 5,
+      "novelty_score": 4,
+      "personalization_options": [
+        "nạp sẵn ảnh",
+        "video lời chúc"
+      ],
+      "avoid_if": [
+        "khó dùng thiết bị điện tử",
+        "không muốn chia sẻ ảnh"
+      ],
+      "rating": 4.9,
+      "review_count": 4473,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "khó dùng thiết bị điện tử",
+        "không muốn chia sẻ ảnh"
+      ],
+      "stock_status": "low_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT030",
+      "name": "Chăn sofa vải mềm màu trung tính",
+      "description": "Chăn sofa vải mềm màu trung tính là món quà giả lập thuộc nhóm nhà cửa và trang trí, phù hợp khi người nhận quan tâm đến cozy, xem phim, đọc sách.",
+      "category": "Home & Decor",
+      "category_label_vi": "Nhà cửa và trang trí",
+      "subcategory": "Home",
+      "price": 590000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "cozy",
+        "xem phim",
+        "đọc sách",
+        "thư giãn",
+        "tối giản"
+      ],
+      "suitable_personality": [
+        "The Calm Soul",
+        "The Peaceful Intellectual",
+        "The Practical Minimalist"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 1,
+        "extraversion": -1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "partner",
+        "parent",
+        "friend"
+      ],
+      "occasions": [
+        "birthday",
+        "housewarming",
+        "get_well"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn",
+        "tối giản"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "thêu tên",
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "dị ứng chất liệu",
+        "khí hậu quá nóng"
+      ],
+      "rating": 4.4,
+      "review_count": 4790,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng chất liệu",
+        "khí hậu quá nóng"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT031",
+      "name": "Album ảnh cá nhân hóa bìa cứng",
+      "description": "Album ảnh cá nhân hóa bìa cứng là món quà giả lập thuộc nhóm cá nhân hóa và kỷ niệm, phù hợp khi người nhận quan tâm đến ảnh, kỷ niệm, cá nhân hóa.",
+      "category": "Personalized & Memory",
+      "category_label_vi": "Cá nhân hóa và kỷ niệm",
+      "subcategory": "Personalized",
+      "price": 620000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "ảnh",
+        "kỷ niệm",
+        "cá nhân hóa",
+        "gia đình",
+        "tình cảm"
+      ],
+      "suitable_personality": [
+        "The Warm Connector",
+        "The Mindful Caregiver",
+        "The Aesthetic Creator"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 2,
+        "neuroticism": 0
+      },
+      "gift_type": "personalized",
+      "recipient_relationships": [
+        "partner",
+        "parent",
+        "friend",
+        "family"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "farewell"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "cá nhân hóa"
+      ],
+      "practical_score": 2,
+      "emotional_score": 5,
+      "novelty_score": 4,
+      "personalization_options": [
+        "ảnh",
+        "lời nhắn",
+        "màu bìa"
+      ],
+      "avoid_if": [
+        "thiếu ảnh phù hợp",
+        "không thích lưu ảnh"
+      ],
+      "rating": 4.5,
+      "review_count": 307,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "thiếu ảnh phù hợp",
+        "không thích lưu ảnh"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT032",
+      "name": "Bản đồ bầu trời theo ngày kỷ niệm",
+      "description": "Bản đồ bầu trời theo ngày kỷ niệm là món quà giả lập thuộc nhóm cá nhân hóa và kỷ niệm, phù hợp khi người nhận quan tâm đến cá nhân hóa, kỷ niệm, bầu trời.",
+      "category": "Personalized & Memory",
+      "category_label_vi": "Cá nhân hóa và kỷ niệm",
+      "subcategory": "Personalized",
+      "price": 470000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "cá nhân hóa",
+        "kỷ niệm",
+        "bầu trời",
+        "trang trí",
+        "lãng mạn"
+      ],
+      "suitable_personality": [
+        "The Aesthetic Creator",
+        "The Warm Connector",
+        "The Curious Explorer"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "personalized",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "family"
+      ],
+      "occasions": [
+        "anniversary",
+        "birthday",
+        "wedding"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "cá nhân hóa"
+      ],
+      "practical_score": 2,
+      "emotional_score": 5,
+      "novelty_score": 4,
+      "personalization_options": [
+        "ngày",
+        "địa điểm",
+        "lời nhắn"
+      ],
+      "avoid_if": [
+        "không thích quà trang trí",
+        "không có ngày rõ"
+      ],
+      "rating": 4.6,
+      "review_count": 624,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích quà trang trí",
+        "không có ngày rõ"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT033",
+      "name": "Voucher xem phim hoặc biểu diễn",
+      "description": "Voucher xem phim hoặc biểu diễn là món quà giả lập thuộc nhóm trải nghiệm và giải trí, phù hợp khi người nhận quan tâm đến xem phim, giải trí, trải nghiệm.",
+      "category": "Experience & Entertainment",
+      "category_label_vi": "Trải nghiệm và giải trí",
+      "subcategory": "Experience",
+      "price": 500000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "xem phim",
+        "giải trí",
+        "trải nghiệm",
+        "hẹn hò",
+        "bạn bè"
+      ],
+      "suitable_personality": [
+        "The Playful Socializer",
+        "The Warm Connector",
+        "The Curious Explorer"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "gift_type": "experience",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "thank_you"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 1,
+      "emotional_score": 5,
+      "novelty_score": 5,
+      "personalization_options": [
+        "loại hình",
+        "lời nhắn"
+      ],
+      "avoid_if": [
+        "khó sắp xếp lịch",
+        "không thích nơi đông"
+      ],
+      "rating": 4.7,
+      "review_count": 941,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "khó sắp xếp lịch",
+        "không thích nơi đông"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT034",
+      "name": "Board game chiến thuật nhẹ",
+      "description": "Board game chiến thuật nhẹ là món quà giả lập thuộc nhóm trải nghiệm và giải trí, phù hợp khi người nhận quan tâm đến board game, bạn bè, gia đình.",
+      "category": "Experience & Entertainment",
+      "category_label_vi": "Trải nghiệm và giải trí",
+      "subcategory": "Experience",
+      "price": 420000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "board game",
+        "bạn bè",
+        "gia đình",
+        "chiến thuật",
+        "tụ tập"
+      ],
+      "suitable_personality": [
+        "The Playful Socializer",
+        "The Diligent Planner",
+        "The Warm Connector"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "social",
+      "recipient_relationships": [
+        "friend",
+        "family",
+        "partner",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "housewarming"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 4,
+      "personalization_options": [
+        "thiệp"
+      ],
+      "avoid_if": [
+        "không thích chơi nhóm",
+        "khó đọc luật"
+      ],
+      "rating": 4.8,
+      "review_count": 1258,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thích chơi nhóm",
+        "khó đọc luật"
+      ],
+      "stock_status": "out_of_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT035",
+      "name": "Micro karaoke Bluetooth mini",
+      "description": "Micro karaoke Bluetooth mini là món quà giả lập thuộc nhóm trải nghiệm và giải trí, phù hợp khi người nhận quan tâm đến karaoke, âm nhạc, hát.",
+      "category": "Experience & Entertainment",
+      "category_label_vi": "Trải nghiệm và giải trí",
+      "subcategory": "Experience",
+      "price": 370000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "karaoke",
+        "âm nhạc",
+        "hát",
+        "tiệc",
+        "vui vẻ"
+      ],
+      "suitable_personality": [
+        "The Playful Socializer",
+        "The Social Foodie",
+        "The Warm Connector"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 1,
+        "neuroticism": -1
+      },
+      "gift_type": "social",
+      "recipient_relationships": [
+        "friend",
+        "sibling",
+        "partner",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "farewell",
+        "team_bonding"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "vui vẻ"
+      ],
+      "practical_score": 2,
+      "emotional_score": 4,
+      "novelty_score": 4,
+      "personalization_options": [
+        "in tên hộp"
+      ],
+      "avoid_if": [
+        "ngại hát",
+        "không gian cần yên tĩnh"
+      ],
+      "rating": 4.9,
+      "review_count": 1575,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "ngại hát",
+        "không gian cần yên tĩnh"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT036",
+      "name": "Voucher phòng chơi giải đố",
+      "description": "Voucher phòng chơi giải đố là món quà giả lập thuộc nhóm trải nghiệm và giải trí, phù hợp khi người nhận quan tâm đến giải đố, trải nghiệm, phiêu lưu.",
+      "category": "Experience & Entertainment",
+      "category_label_vi": "Trải nghiệm và giải trí",
+      "subcategory": "Experience",
+      "price": 720000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "giải đố",
+        "trải nghiệm",
+        "phiêu lưu",
+        "hẹn hò",
+        "phối hợp"
+      ],
+      "suitable_personality": [
+        "The Curious Explorer",
+        "The Playful Socializer",
+        "The Diligent Planner"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 0,
+        "extraversion": 1,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "experience",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "anniversary",
+        "no_occasion"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "modern"
+      ],
+      "practical_score": 1,
+      "emotional_score": 5,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn chủ đề",
+        "lời nhắn"
+      ],
+      "avoid_if": [
+        "sợ không gian kín",
+        "khó sắp xếp lịch"
+      ],
+      "rating": 4.4,
+      "review_count": 1892,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "sợ không gian kín",
+        "khó sắp xếp lịch"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT037",
+      "name": "Bộ chăm sóc da cơ bản không mùi",
+      "description": "Bộ chăm sóc da cơ bản không mùi là món quà giả lập thuộc nhóm làm đẹp và chăm sóc bản thân, phù hợp khi người nhận quan tâm đến chăm sóc da, self-care, tối giản.",
+      "category": "Beauty & Self-care",
+      "category_label_vi": "Làm đẹp và chăm sóc bản thân",
+      "subcategory": "Beauty",
+      "price": 680000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "chăm sóc da",
+        "self-care",
+        "tối giản",
+        "thực tế",
+        "không mùi"
+      ],
+      "suitable_personality": [
+        "The Mindful Caregiver",
+        "The Practical Minimalist",
+        "The Elegant Professional"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 2,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "parent",
+        "sibling"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "thank_you"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "tối giản"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "thiệp"
+      ],
+      "avoid_if": [
+        "da nhạy cảm",
+        "đang điều trị da",
+        "không rõ loại da"
+      ],
+      "rating": 4.5,
+      "review_count": 2209,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "da nhạy cảm",
+        "đang điều trị da"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT038",
+      "name": "Voucher massage thư giãn 60 phút",
+      "description": "Voucher massage thư giãn 60 phút là món quà giả lập thuộc nhóm làm đẹp và chăm sóc bản thân, phù hợp khi người nhận quan tâm đến massage, thư giãn, stress.",
+      "category": "Beauty & Self-care",
+      "category_label_vi": "Làm đẹp và chăm sóc bản thân",
+      "subcategory": "Beauty",
+      "price": 900000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "massage",
+        "thư giãn",
+        "stress",
+        "self-care",
+        "trải nghiệm"
+      ],
+      "suitable_personality": [
+        "The Calm Soul",
+        "The Mindful Caregiver",
+        "The Elegant Professional"
+      ],
+      "big_five_affinity": {
+        "openness": 0,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "experience",
+      "recipient_relationships": [
+        "partner",
+        "parent",
+        "friend",
+        "colleague"
+      ],
+      "occasions": [
+        "birthday",
+        "thank_you",
+        "get_well"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn"
+      ],
+      "practical_score": 1,
+      "emotional_score": 5,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn chi nhánh",
+        "lời nhắn"
+      ],
+      "avoid_if": [
+        "không thoải mái với massage",
+        "tình trạng sức khỏe đặc biệt"
+      ],
+      "rating": 4.6,
+      "review_count": 2526,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không thoải mái với massage",
+        "tình trạng sức khỏe đặc biệt"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 4
+    },
+    {
+      "id": "GIFT039",
+      "name": "Máy khuếch tán tinh dầu mini",
+      "description": "Máy khuếch tán tinh dầu mini là món quà giả lập thuộc nhóm làm đẹp và chăm sóc bản thân, phù hợp khi người nhận quan tâm đến tinh dầu, thư giãn, phòng ngủ.",
+      "category": "Beauty & Self-care",
+      "category_label_vi": "Làm đẹp và chăm sóc bản thân",
+      "subcategory": "Beauty",
+      "price": 440000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "tinh dầu",
+        "thư giãn",
+        "phòng ngủ",
+        "bàn làm việc",
+        "chill"
+      ],
+      "suitable_personality": [
+        "The Calm Soul",
+        "The Aesthetic Creator",
+        "The Peaceful Intellectual"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": -1,
+        "agreeableness": 1,
+        "neuroticism": 0
+      },
+      "gift_type": "practical",
+      "recipient_relationships": [
+        "partner",
+        "friend",
+        "colleague",
+        "parent"
+      ],
+      "occasions": [
+        "birthday",
+        "housewarming",
+        "holiday"
+      ],
+      "age_groups": [
+        "teen",
+        "young_adult",
+        "adult"
+      ],
+      "style": [
+        "thư giãn"
+      ],
+      "practical_score": 5,
+      "emotional_score": 2,
+      "novelty_score": 1,
+      "personalization_options": [
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "dị ứng hương liệu",
+        "nhà có thú cưng nhạy tinh dầu"
+      ],
+      "rating": 4.7,
+      "review_count": 2843,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "dị ứng hương liệu",
+        "nhà có thú cưng nhạy tinh dầu"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT040",
+      "name": "Bộ thí nghiệm khoa học mini",
+      "description": "Bộ thí nghiệm khoa học mini là món quà giả lập thuộc nhóm trẻ em và học tập, phù hợp khi người nhận quan tâm đến khoa học, stem, khám phá.",
+      "category": "Kids & Learning",
+      "category_label_vi": "Trẻ em và học tập",
+      "subcategory": "Kids",
+      "price": 520000,
+      "currency": "VND",
+      "price_band": "500k_999k",
+      "tags": [
+        "khoa học",
+        "stem",
+        "khám phá",
+        "học tập",
+        "thực hành",
+        "sáng tạo"
+      ],
+      "suitable_personality": [
+        "The Curious Explorer",
+        "The Diligent Planner",
+        "The Tech Enthusiast"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "educational",
+      "recipient_relationships": [
+        "child",
+        "sibling",
+        "student",
+        "family"
+      ],
+      "occasions": [
+        "birthday",
+        "back_to_school",
+        "reward"
+      ],
+      "age_groups": [
+        "child",
+        "teen"
+      ],
+      "style": [
+        "sáng tạo"
+      ],
+      "practical_score": 4,
+      "emotional_score": 3,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn chủ đề"
+      ],
+      "avoid_if": [
+        "không phù hợp độ tuổi",
+        "cần người lớn giám sát"
+      ],
+      "rating": 4.8,
+      "review_count": 3160,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không phù hợp độ tuổi",
+        "cần người lớn giám sát"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT041",
+      "name": "Bộ xếp hình kiến trúc 3D",
+      "description": "Bộ xếp hình kiến trúc 3D là món quà giả lập thuộc nhóm trẻ em và học tập, phù hợp khi người nhận quan tâm đến xếp hình, kiến trúc, tập trung.",
+      "category": "Kids & Learning",
+      "category_label_vi": "Trẻ em và học tập",
+      "subcategory": "Kids",
+      "price": 430000,
+      "currency": "VND",
+      "price_band": "200k_499k",
+      "tags": [
+        "xếp hình",
+        "kiến trúc",
+        "tập trung",
+        "sáng tạo",
+        "học tập"
+      ],
+      "suitable_personality": [
+        "The Curious Explorer",
+        "The Aesthetic Creator",
+        "The Diligent Planner"
+      ],
+      "big_five_affinity": {
+        "openness": 1,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": 0
+      },
+      "gift_type": "educational",
+      "recipient_relationships": [
+        "child",
+        "sibling",
+        "student"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "reward"
+      ],
+      "age_groups": [
+        "child",
+        "teen"
+      ],
+      "style": [
+        "sáng tạo"
+      ],
+      "practical_score": 4,
+      "emotional_score": 3,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn công trình"
+      ],
+      "avoid_if": [
+        "chi tiết nhỏ",
+        "không thích lắp ráp"
+      ],
+      "rating": 4.9,
+      "review_count": 3477,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "chi tiết nhỏ",
+        "không thích lắp ráp"
+      ],
+      "stock_status": "low_stock",
+      "lead_time_days": 1
+    },
+    {
+      "id": "GIFT042",
+      "name": "Máy ảnh in nhiệt cho trẻ em",
+      "description": "Máy ảnh in nhiệt cho trẻ em là món quà giả lập thuộc nhóm trẻ em và học tập, phù hợp khi người nhận quan tâm đến chụp ảnh, sáng tạo, công nghệ.",
+      "category": "Kids & Learning",
+      "category_label_vi": "Trẻ em và học tập",
+      "subcategory": "Kids",
+      "price": 1100000,
+      "currency": "VND",
+      "price_band": "1m_1m999",
+      "tags": [
+        "chụp ảnh",
+        "sáng tạo",
+        "công nghệ",
+        "khám phá",
+        "kỷ niệm"
+      ],
+      "suitable_personality": [
+        "The Curious Explorer",
+        "The Tech Enthusiast",
+        "The Aesthetic Creator"
+      ],
+      "big_five_affinity": {
+        "openness": 2,
+        "conscientiousness": 1,
+        "extraversion": 0,
+        "agreeableness": 0,
+        "neuroticism": -1
+      },
+      "gift_type": "educational",
+      "recipient_relationships": [
+        "child",
+        "sibling",
+        "family"
+      ],
+      "occasions": [
+        "birthday",
+        "holiday",
+        "graduation"
+      ],
+      "age_groups": [
+        "child",
+        "teen"
+      ],
+      "style": [
+        "sáng tạo"
+      ],
+      "practical_score": 4,
+      "emotional_score": 3,
+      "novelty_score": 5,
+      "personalization_options": [
+        "chọn màu"
+      ],
+      "avoid_if": [
+        "không phù hợp độ tuổi",
+        "cần mua thêm giấy in"
+      ],
+      "rating": 4.4,
+      "review_count": 3794,
+      "positive_review_themes": [
+        "phù hợp mô tả",
+        "dễ dùng hoặc dễ trải nghiệm",
+        "thiết kế và đóng gói phù hợp làm quà"
+      ],
+      "caution_review_themes": [
+        "không phù hợp độ tuổi",
+        "cần mua thêm giấy in"
+      ],
+      "stock_status": "in_stock",
+      "lead_time_days": 1
+    }
+  ],
+  "mock_user_profiles": [
+    {
+      "user_id": "USER001",
+      "recipient_summary": "Bạn nữ 24 tuổi, hướng nội, thích đọc tiểu thuyết và ở nhà cuối tuần.",
+      "relationship": "friend",
+      "occasion": "birthday",
+      "budget_max": 500000,
+      "interests": [
+        "đọc sách",
+        "trà",
+        "yên tĩnh"
+      ],
+      "dislikes": [
+        "quà phô trương",
+        "nơi đông"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 53,
+        "conscientiousness": 53,
+        "extraversion": 17,
+        "agreeableness": 71,
+        "neuroticism": 53
+      },
+      "archetype_candidates": [
+        "The Peaceful Intellectual",
+        "The Calm Soul"
+      ]
+    },
+    {
+      "user_id": "USER002",
+      "recipient_summary": "Bạn trai làm lập trình, thích thiết bị mới, chơi game và làm việc tại bàn.",
+      "relationship": "partner",
+      "occasion": "anniversary",
+      "budget_max": 1500000,
+      "interests": [
+        "công nghệ",
+        "game",
+        "góc làm việc"
+      ],
+      "dislikes": [
+        "đồ trang trí vô dụng"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 87,
+        "conscientiousness": 87,
+        "extraversion": 51,
+        "agreeableness": 51,
+        "neuroticism": 51
+      },
+      "archetype_candidates": [
+        "The Tech Enthusiast",
+        "The Focused Creator"
+      ]
+    },
+    {
+      "user_id": "USER003",
+      "recipient_summary": "Người nhận thích chạy bộ, đi phượt và mang đồ tối giản.",
+      "relationship": "sibling",
+      "occasion": "graduation",
+      "budget_max": 600000,
+      "interests": [
+        "chạy bộ",
+        "du lịch",
+        "ngoài trời"
+      ],
+      "dislikes": [
+        "đồ cồng kềnh"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 67,
+        "conscientiousness": 49,
+        "extraversion": 85,
+        "agreeableness": 49,
+        "neuroticism": 31
+      },
+      "archetype_candidates": [
+        "The Active Adventurer",
+        "The Nature Lover"
+      ]
+    },
+    {
+      "user_id": "USER004",
+      "recipient_summary": "Quản lý nữ khoảng 40 tuổi, chỉn chu, thích trà và quà trung tính.",
+      "relationship": "boss",
+      "occasion": "thank_you",
+      "budget_max": 1000000,
+      "interests": [
+        "trà",
+        "tiếp khách",
+        "đồ thủ công"
+      ],
+      "dislikes": [
+        "quà quá riêng tư"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 47,
+        "conscientiousness": 83,
+        "extraversion": 47,
+        "agreeableness": 65,
+        "neuroticism": 47
+      },
+      "archetype_candidates": [
+        "The Elegant Professional",
+        "The Traditional Connoisseur"
+      ]
+    },
+    {
+      "user_id": "USER005",
+      "recipient_summary": "Bạn thích vẽ, móc len, tự làm đồ và thích quà tự hoàn thiện.",
+      "relationship": "friend",
+      "occasion": "birthday",
+      "budget_max": 700000,
+      "interests": [
+        "vẽ",
+        "móc len",
+        "thủ công"
+      ],
+      "dislikes": [
+        "đồ đại trà"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 90,
+        "conscientiousness": 54,
+        "extraversion": 54,
+        "agreeableness": 54,
+        "neuroticism": 54
+      },
+      "archetype_candidates": [
+        "The Aesthetic Creator",
+        "The Curious Explorer"
+      ]
+    },
+    {
+      "user_id": "USER006",
+      "recipient_summary": "Mẹ thích lưu ảnh gia đình và món quà có ý nghĩa.",
+      "relationship": "parent",
+      "occasion": "birthday",
+      "budget_max": 1500000,
+      "interests": [
+        "gia đình",
+        "ảnh",
+        "trang trí nhà"
+      ],
+      "dislikes": [
+        "thiết bị khó dùng"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 52,
+        "conscientiousness": 52,
+        "extraversion": 52,
+        "agreeableness": 88,
+        "neuroticism": 52
+      },
+      "archetype_candidates": [
+        "The Warm Connector",
+        "The Mindful Caregiver"
+      ]
+    },
+    {
+      "user_id": "USER007",
+      "recipient_summary": "Đồng nghiệp mới quen, thích bàn làm việc gọn và đồ hữu ích.",
+      "relationship": "colleague",
+      "occasion": "farewell",
+      "budget_max": 500000,
+      "interests": [
+        "tổ chức",
+        "góc làm việc",
+        "tối giản"
+      ],
+      "dislikes": [
+        "đồ lưu niệm",
+        "mùi thơm"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 50,
+        "conscientiousness": 86,
+        "extraversion": 50,
+        "agreeableness": 50,
+        "neuroticism": 50
+      },
+      "archetype_candidates": [
+        "The Practical Minimalist",
+        "The Diligent Planner"
+      ]
+    },
+    {
+      "user_id": "USER008",
+      "recipient_summary": "Người nhận thích thử cà phê mới, workshop và khám phá quán ăn.",
+      "relationship": "partner",
+      "occasion": "no_occasion",
+      "budget_max": 800000,
+      "interests": [
+        "cà phê",
+        "workshop",
+        "ẩm thực"
+      ],
+      "dislikes": [
+        "quà lặp lại"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 84,
+        "conscientiousness": 48,
+        "extraversion": 66,
+        "agreeableness": 48,
+        "neuroticism": 30
+      },
+      "archetype_candidates": [
+        "The Curious Explorer",
+        "The Social Foodie"
+      ]
+    },
+    {
+      "user_id": "USER009",
+      "recipient_summary": "Sinh viên chăm học, lập kế hoạch và học buổi tối.",
+      "relationship": "student",
+      "occasion": "graduation",
+      "budget_max": 900000,
+      "interests": [
+        "học tập",
+        "ghi chép",
+        "đọc sách"
+      ],
+      "dislikes": [
+        "đồ gây xao nhãng"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 46,
+        "conscientiousness": 82,
+        "extraversion": 10,
+        "agreeableness": 46,
+        "neuroticism": 46
+      },
+      "archetype_candidates": [
+        "The Diligent Planner",
+        "The Peaceful Intellectual"
+      ]
+    },
+    {
+      "user_id": "USER010",
+      "recipient_summary": "Bạn thân thích tụ tập, hát karaoke và chơi trò chơi nhóm.",
+      "relationship": "friend",
+      "occasion": "birthday",
+      "budget_max": 500000,
+      "interests": [
+        "karaoke",
+        "board game",
+        "bạn bè"
+      ],
+      "dislikes": [
+        "hoạt động một mình"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 71,
+        "conscientiousness": 53,
+        "extraversion": 89,
+        "agreeableness": 89,
+        "neuroticism": 53
+      },
+      "archetype_candidates": [
+        "The Playful Socializer",
+        "The Warm Connector"
+      ]
+    },
+    {
+      "user_id": "USER011",
+      "recipient_summary": "Người nhận yêu cây xanh, cắm trại và vật dụng gần thiên nhiên.",
+      "relationship": "friend",
+      "occasion": "housewarming",
+      "budget_max": 600000,
+      "interests": [
+        "cây xanh",
+        "cắm trại",
+        "thiên nhiên"
+      ],
+      "dislikes": [
+        "đồ nhựa dùng một lần"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 69,
+        "conscientiousness": 51,
+        "extraversion": 87,
+        "agreeableness": 51,
+        "neuroticism": 33
+      },
+      "archetype_candidates": [
+        "The Nature Lover",
+        "The Active Adventurer"
+      ]
+    },
+    {
+      "user_id": "USER012",
+      "recipient_summary": "Bố lớn tuổi thích uống trà, tiếp khách và phong cách truyền thống.",
+      "relationship": "parent",
+      "occasion": "holiday",
+      "budget_max": 1000000,
+      "interests": [
+        "trà",
+        "gốm",
+        "truyền thống"
+      ],
+      "dislikes": [
+        "thiết bị điện tử phức tạp"
+      ],
+      "preferred_gift_type": [],
+      "big_five_scores_demo": {
+        "openness": 49,
+        "conscientiousness": 85,
+        "extraversion": 49,
+        "agreeableness": 67,
+        "neuroticism": 49
+      },
+      "archetype_candidates": [
+        "The Traditional Connoisseur",
+        "The Elegant Professional"
+      ]
+    }
+  ],
+  "mock_interactions": [
+    {
+      "interaction_id": "INT001",
+      "user_id": "USER001",
+      "gift_id": "GIFT004",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT002",
+      "user_id": "USER001",
+      "gift_id": "GIFT035",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT003",
+      "user_id": "USER002",
+      "gift_id": "GIFT010",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT004",
+      "user_id": "USER002",
+      "gift_id": "GIFT030",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT005",
+      "user_id": "USER003",
+      "gift_id": "GIFT016",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT006",
+      "user_id": "USER003",
+      "gift_id": "GIFT013",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT007",
+      "user_id": "USER004",
+      "gift_id": "GIFT013",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT008",
+      "user_id": "USER004",
+      "gift_id": "GIFT031",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT009",
+      "user_id": "USER005",
+      "gift_id": "GIFT019",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT010",
+      "user_id": "USER005",
+      "gift_id": "GIFT008",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT011",
+      "user_id": "USER006",
+      "gift_id": "GIFT029",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT012",
+      "user_id": "USER006",
+      "gift_id": "GIFT010",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT013",
+      "user_id": "USER007",
+      "gift_id": "GIFT008",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT014",
+      "user_id": "USER007",
+      "gift_id": "GIFT001",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT015",
+      "user_id": "USER008",
+      "gift_id": "GIFT021",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT016",
+      "user_id": "USER008",
+      "gift_id": "GIFT011",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT017",
+      "user_id": "USER009",
+      "gift_id": "GIFT012",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT018",
+      "user_id": "USER009",
+      "gift_id": "GIFT035",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT019",
+      "user_id": "USER010",
+      "gift_id": "GIFT034",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT020",
+      "user_id": "USER010",
+      "gift_id": "GIFT005",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT021",
+      "user_id": "USER011",
+      "gift_id": "GIFT024",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT022",
+      "user_id": "USER011",
+      "gift_id": "GIFT039",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    },
+    {
+      "interaction_id": "INT023",
+      "user_id": "USER012",
+      "gift_id": "GIFT013",
+      "shown": true,
+      "clicked": true,
+      "selected": true,
+      "rating": 5,
+      "reason": "Phù hợp sở thích, ngữ cảnh và ngân sách của hồ sơ."
+    },
+    {
+      "interaction_id": "INT024",
+      "user_id": "USER012",
+      "gift_id": "GIFT029",
+      "shown": true,
+      "clicked": false,
+      "selected": false,
+      "rating": 2,
+      "reason": "Không phù hợp một hoặc nhiều sở thích, điều cần tránh hoặc bối cảnh quan hệ."
+    }
+  ],
+  "generation_spec": {
+    "goal": "Sinh thêm dữ liệu tổng hợp cùng cấu trúc để test search, filter, ranking, explanation và edge case.",
+    "required_product_fields_for_current_tools": [
+      "id",
+      "name",
+      "category",
+      "price",
+      "tags",
+      "suitable_personality",
+      "rating"
+    ],
+    "generation_rules": [
+      "Chỉ tạo sản phẩm và hồ sơ giả lập; không sao chép người dùng thật.",
+      "Tên sản phẩm không trùng và không phụ thuộc thương hiệu thật.",
+      "Mỗi sản phẩm có 5-10 tags, 2-3 archetype và ít nhất một avoid_if.",
+      "Giá phải khớp price_band; rating 4.0-4.9; review_count 20-5000.",
+      "Quà cho boss, teacher hoặc client phải trung tính và ít riêng tư.",
+      "Quà consumable hoặc self-care phải có cảnh báo dị ứng hoặc độ nhạy.",
+      "Quà experience/personalized phải có lead_time_days lớn hơn 1.",
+      "Không tạo tuyên bố chữa bệnh hoặc chẩn đoán tâm lý.",
+      "Sinh cả tương tác tích cực và tiêu cực để test ranking."
+    ],
+    "llm_generation_prompt_vi": "Sinh {n} sản phẩm quà tặng tổng hợp bằng tiếng Việt theo field_descriptions và controlled_vocabularies. Giữ nguyên JSON schema, không thêm markdown, không dùng thương hiệu thật, không trùng tên, mỗi bản ghi phải có avoid_if và chỉ trả về JSON array.",
+    "quality_checks": [
+      "ID duy nhất.",
+      "Đủ trường bắt buộc.",
+      "price là số nguyên dương và khớp price_band.",
+      "rating trong 1.0-5.0.",
+      "Các điểm practical/emotional/novelty trong 1-5.",
+      "Mọi suitable_personality tồn tại trong personality_archetypes.",
+      "Không chọn out_of_stock làm đề xuất cuối nếu còn lựa chọn phù hợp khác."
+    ]
+  }
+}
