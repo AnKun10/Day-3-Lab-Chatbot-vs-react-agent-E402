@@ -1,29 +1,32 @@
-```mermaid
-graph TD
-    A[User Request / Câu hỏi của người dùng] --> B{Phân loại yêu cầu?}
+flowchart TD
+    A["User Request / Câu hỏi người dùng"] --> B{"Phân loại yêu cầu?"}
     
     %% Đường đi Chatbot Baseline
-    B -- "Câu hỏi đơn giản / Kiến thức chung" --> C[Chatbot Baseline Path]
-    C --> C1[LLM trả lời trực tiếp từ kiến thức tĩnh]
-    C1 --> C2[Phản hồi người dùng nhanh chóng]
+    B -- "Câu hỏi đơn giản / Kiến thức chung" --> C["Chatbot Baseline Path"]
+    C --> C1["LLM trả lời trực tiếp từ kiến thức tĩnh"]
+    C1 --> C2["Phản hồi người dùng nhanh chóng"]
     
     %% Đường đi ReAct Agent Loop
-    B -- "Cần chọn quà / Tra cứu kho / Phân tích tính cách" --> D[ReAct Agent Path]
-    D --> E[ReAct Reasoning Loop]
-    E --> F[Thought: Suy luận bước tiếp theo]
-    F --> G{Cần dùng Tool?}
+    B -- "Cần chọn quà / Tra cứu kho / Phân tích tính cách" --> D["ReAct Agent Path"]
+    D --> E["ReAct Reasoning Loop"]
+    E --> F["Thought: Suy luận bước tiếp theo"]
+    F --> G{"Cần dùng Tool?"}
     
-    G -- Có --> H[Action: Gọi Công Cụ Phù Hợp]
-    H --> H1[1. analyze_personality / extract_interests]
-    H --> H2[2. recommend_gifts / filter_by_budget]
-    H --> H3[3. search_products / check_reviews]
-    H --> H4[4. find_nearby_stores / suggest_gift_wrapping]
+    G -- "Có" --> H["Action: Gọi Công Cụ Phù Hợp"]
+    H --> H1["1. analyze_personality / extract_interests"]
+    H --> H2["2. recommend_gifts / filter_by_budget"]
+    H --> H3["3. search_products / check_reviews"]
+    H --> H4["4. find_nearby_stores / suggest_gift_wrapping"]
     
-    H1 & H2 & H3 & H4 --> I[Observation: Kết quả thực thi Tool]
-    I --> J{Đạt giới hạn MAX_ITERATIONS?}
-    J -- Có --> K[🛡️ Guardrail Triggered: Ngắt lặp an toàn]
-    J -- Chưa --> F
+    H1 --> I["Observation: Kết quả thực thi Tool"]
+    H2 --> I
+    H3 --> I
+    H4 --> I
     
-    G -- Đã đủ thông tin --> L[Final Answer: Tổng hợp câu trả lời hoàn chỉnh]
-    K & L --> M[Phản hồi người dùng]
-```
+    I --> J{"Đạt giới hạn MAX_ITERATIONS?"}
+    J -- "Có" --> K["Shield: Guardrail Triggered - Ngắt lặp an toàn"]
+    J -- "Chưa" --> F
+    
+    G -- "Đã đủ thông tin" --> L["Final Answer: Tổng hợp câu trả lời hoàn chỉnh"]
+    K --> M["Phản hồi người dùng"]
+    L --> M
