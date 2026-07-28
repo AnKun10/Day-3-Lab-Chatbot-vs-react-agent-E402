@@ -2,31 +2,31 @@
   {
     "id": 1,
     "category": "🟢 Đơn giản (Chỉ cần LLM)",
-    "question": "Thủ đô của Việt Nam là gì?",
-    "expected_behavior": "Chatbot trả lời trực tiếp từ kiến thức có sẵn."
+    "question": "Bạn gái của tôi là người hướng nội, thích đọc sách và không gian yên tĩnh. Bạn gợi ý một vài món quà phù hợp nhé.",
+    "expected_behavior": "Agent phân tích mô tả, xác định nhóm The Peaceful Intellectual và gợi ý các sản phẩm như GIFT001 hoặc GIFT002 kèm giải thích."
   },
   {
     "id": 2,
-    "category": "🟢 Đơn giản (Chỉ cần LLM)",
-    "question": "Nêu 3 lời khuyên để học tốt lập trình.",
-    "expected_behavior": "Chatbot trả lời trực tiếp từ kiến thức có sẵn."
+    "category": "🟢 Đơn giản (Chỉ cần 1 Tool)",
+    "question": "Tìm giúp tôi các món quà liên quan đến công nghệ có giá dưới 1 triệu đồng.",
+    "expected_behavior": "Agent gọi search_products(keyword='công nghệ', max_price=1000000) và trả về GIFT003."
   },
   {
     "id": 3,
-    "category": "🟡 Multi-step (Cần Tool)",
-    "question": "Thời tiết ở Hà Nội hôm nay thế nào và tôi nên mặc gì đi chơi?",
-    "expected_behavior": "Agent gọi tool get_weather('Hà Nội') rồi suy luận trang phục."
+    "category": "🟡 Multi-step (Cần nhiều Tool)",
+    "question": "Bạn trai tôi làm IT, thích công nghệ và chơi game. Ngân sách khoảng 1 triệu đồng. Hãy chọn món quà phù hợp nhất và giải thích.",
+    "expected_behavior": "Agent lần lượt gọi analyze_personality → extract_interests → filter_recommendations → rank_gifts → explain_recommendation rồi đề xuất GIFT003 là lựa chọn phù hợp."
   },
   {
     "id": 4,
-    "category": "🟡 Multi-step (Cần gọi 2 Tools)",
-    "question": "Kiểm tra vé máy bay từ TP.HCM đi Hà Nội ngày mai và dự báo thời tiết ở Hà Nội.",
-    "expected_behavior": "Agent gọi tool search_flights và get_weather để trả lời đầy đủ."
+    "category": "🟡 Multi-step (Memory + Recommendation)",
+    "question": "Hãy lưu rằng tôi thích quà phong cách vintage. Sau đó gợi ý một món quà phù hợp cho tôi.",
+    "expected_behavior": "Agent gọi user_memory_store(save) để lưu sở thích, sau đó đọc memory hoặc dùng thông tin vừa lưu để đề xuất GIFT001 hoặc GIFT002."
   },
   {
     "id": 5,
-    "category": "🔴 Edge Case (Bẫy Guardrail)",
-    "question": "Tra cứu thời tiết ở thành phố Atlantis ngày 32/13/2026.",
-    "expected_behavior": "Tool báo lỗi tham số/thất bại, Guardrail ngắt sau 3 bước và trả về thông báo lịch sự."
+    "category": "🔴 Edge Case (Guardrail)",
+    "question": "Tìm cho tôi món quà giá -500000 đồng và giải thích vì sao nó phù hợp.",
+    "expected_behavior": "Agent phát hiện tham số ngân sách không hợp lệ hoặc search_products không trả kết quả phù hợp, dừng quy trình và trả về thông báo lỗi lịch sự thay vì tiếp tục xếp hạng hoặc giải thích."
   }
 ]
